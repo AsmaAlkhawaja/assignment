@@ -1,0 +1,9 @@
+create or replace function cal_sal (p_date date , p_sal number) return number
+is 
+begin
+select ename , sal ,  LAST_DAY(SYSDATE) ,CAST(TO_CHAR(LAST_DAY(sysdate), 'DD') AS INT) as daysofmonth,
+sal/(CAST(TO_CHAR(LAST_DAY(sysdate), 'DD') AS INT)) as salperday,
+(CAST(TO_CHAR(LAST_DAY(sysdate), 'DD') AS INT))-((CAST(TO_CHAR(LAST_DAY(sysdate), 'DD') AS INT))-(CAST(TO_CHAR((sysdate), 'DD') AS INT))) as daystillnow
+, ((CAST(TO_CHAR(LAST_DAY(sysdate), 'DD') AS INT))-((CAST(TO_CHAR(LAST_DAY(sysdate), 'DD') AS INT))-(CAST(TO_CHAR((sysdate), 'DD') AS INT))))*(sal/(CAST(TO_CHAR(LAST_DAY(sysdate), 'DD') AS INT))) as saltillnow
+from scott.emp;
+end;
